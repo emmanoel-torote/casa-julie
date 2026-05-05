@@ -152,11 +152,9 @@
 
     /* ── LEAD ── */
     .lead {
-      padding: var(--gap) clamp(1.5rem, 8vw, 10rem);
+      padding: clamp(3rem, 5vw, 4.5rem) clamp(1.5rem, 8vw, 10rem);
       max-width: 900px;
       margin: 0 auto;
-      padding-top: clamp(4rem, 8vw, 7rem);
-      padding-bottom: clamp(4rem, 8vw, 7rem);
     }
 
     .lead p {
@@ -686,7 +684,7 @@
   </section>
 
   <!-- ── LEAD COPY ── -->
-  <section class="lead reveal">
+  <section class="lead">
     <p>A generously scaled residence on the first hill above Todos Santos, set within Fraccionamiento Punta Lobos — one of the town's most established neighborhoods, moments from the Pacific coast and the cultural heart of the village.</p>
     <p>The main house offers three bedrooms and three full bathrooms across a thoughtful floor plan, complemented by a fully independent guest casita with its own bedroom and bath. The property is move-in ready and positioned for significant upside with the addition of a pool and landscaping.</p>
   </section>
@@ -758,13 +756,13 @@
 
   <!-- ── PROPERTY DETAILS ── -->
   <div class="details">
-    <div class="details-text reveal">
+    <div class="details-text">
       <h2>A residence that rewards the right vision</h2>
       <p>Built on a 770 m² lot within Fraccionamiento Punta Lobos, the property sits on the first ridge above Todos Santos — offering elevated positioning with clear views toward the Pacific, close enough to feel the town without being inside it.</p>
       <p>The main house features three bedrooms and three full bathrooms. The primary suite is accessed independently, providing complete privacy from the main living areas. A fully detached casita with its own bedroom and bathroom makes the property ideal for dual-use: owner residence plus rental income, or private guest accommodation.</p>
       <p>The land footprint and existing infrastructure provide a natural foundation for a pool installation and landscaping program, two improvements that would substantially elevate the property's rental and resale value in this market.</p>
     </div>
-    <div class="details-list reveal">
+    <div class="details-list">
       <h3>Property Specifications</h3>
       <div class="spec-row">
         <span class="spec-key">Location</span>
@@ -878,8 +876,6 @@
     <a class="cta-btn" href="mailto:amy@amyrextodossantos.com?subject=Casa%20Julie%20%E2%80%94%20Inquiry">
       Get in Touch
     </a>
-
-    <div class="cta-divider"></div>
   </section>
 
   <!-- ── FOOTER ── */
@@ -950,11 +946,12 @@
     });
 
     // ── Scroll reveal ──
+    const revealEls = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver(
-      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-      { threshold: 0.12 }
+      entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }),
+      { threshold: 0.06, rootMargin: '0px 0px -40px 0px' }
     );
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    revealEls.forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
