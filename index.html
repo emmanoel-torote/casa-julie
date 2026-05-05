@@ -7,178 +7,266 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --sand:   #F2EDE4;
-      --linen:  #EDE5D8;
-      --stone:  #C9BEB2;
-      --clay:   #A07B67;
-      --earth:  #5C4033;
-      --ink:    #1A0F0A;
-      --white:  #FAFAF8;
+      --black: #0D0D0D;
+      --off-black: #1A1A1A;
+      --mid: #6B6B6B;
+      --rule: #D8D8D8;
+      --bg: #F8F8F7;
+      --white: #FFFFFF;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Jost', sans-serif;
-      background: var(--sand);
-      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--black);
       font-weight: 300;
-      letter-spacing: 0.01em;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* HERO */
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2.5rem;
+      mix-blend-mode: normal;
+    }
+
+    nav.scrolled {
+      background: rgba(255,255,255,0.96);
+      border-bottom: 1px solid var(--rule);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      transition: color 0.3s;
+      text-decoration: none;
+    }
+    nav.scrolled .nav-logo { color: var(--black); }
+
+    .nav-cta {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.55rem 1.4rem;
+      border: 1px solid rgba(255,255,255,0.45);
+      transition: all 0.3s;
+    }
+    nav.scrolled .nav-cta {
+      color: var(--black);
+      border-color: var(--black);
+    }
+    .nav-cta:hover {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+    }
+
+    /* ─── HERO ─── */
     .hero {
       position: relative;
       height: 100svh;
-      min-height: 620px;
-      display: grid;
-      place-items: center;
+      min-height: 640px;
       overflow: hidden;
+      background: var(--black);
     }
-
-    .hero-bg { position: absolute; inset: 0; background: var(--ink); }
 
     .hero-img {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 2s ease;
+      transition: opacity 2.2s ease;
+      filter: grayscale(100%);
     }
-    .hero-img.active { opacity: 0.78; }
+    .hero-img.active { opacity: 0.72; }
 
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(160deg, rgba(26,15,10,0.08) 0%, rgba(26,15,10,0.0) 35%, rgba(26,15,10,0.62) 100%);
+      background: linear-gradient(
+        to bottom,
+        rgba(13,13,13,0.2) 0%,
+        rgba(13,13,13,0.0) 40%,
+        rgba(13,13,13,0.65) 100%
+      );
     }
 
     .hero-content {
-      position: relative;
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 4rem 2.5rem;
       z-index: 2;
-      text-align: center;
-      color: var(--white);
-      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
     }
 
+    .hero-left {}
+
     .hero-eyebrow {
-      font-size: 0.68rem;
-      letter-spacing: 0.35em;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: rgba(201,190,178,0.8);
-      margin-bottom: 1.75rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1rem;
       opacity: 0;
-      transform: translateY(10px);
-      animation: fadeUp 1s 0.3s forwards;
+      transform: translateY(8px);
+      animation: fadeUp 0.9s 0.4s forwards;
     }
 
     .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(4rem, 10vw, 9rem);
-      line-height: 0.92;
-      margin-bottom: 1.5rem;
+      font-family: 'EB Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(4.5rem, 11vw, 10rem);
+      line-height: 0.9;
+      color: var(--white);
       opacity: 0;
-      transform: translateY(18px);
-      animation: fadeUp 1.1s 0.5s forwards;
+      transform: translateY(20px);
+      animation: fadeUp 1.1s 0.6s forwards;
     }
-    .hero-title em { font-style: italic; color: var(--stone); }
-
-    .hero-tagline {
-      font-family: 'Cormorant Garamond', serif;
+    .hero-title em {
       font-style: italic;
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      color: rgba(250,250,248,0.58);
-      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .hero-right {
+      text-align: right;
       opacity: 0;
       transform: translateY(10px);
-      animation: fadeUp 1s 0.85s forwards;
+      animation: fadeUp 0.9s 1s forwards;
+    }
+
+    .hero-tagline {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      color: rgba(255,255,255,0.55);
+      max-width: 280px;
+      line-height: 1.5;
     }
 
     .hero-scroll {
       position: absolute;
-      bottom: 2.5rem;
+      bottom: 2rem;
       left: 50%;
       transform: translateX(-50%);
       z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.6rem;
-      color: rgba(201,190,178,0.4);
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
+      gap: 0.5rem;
       opacity: 0;
-      animation: fadeUp 1s 1.4s forwards;
+      animation: fadeUp 0.8s 1.5s forwards;
     }
     .scroll-line {
       width: 1px;
-      height: 44px;
-      background: linear-gradient(to bottom, transparent, rgba(201,190,178,0.5));
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.35));
+    }
+    .scroll-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
     }
 
-    /* INTRO */
+    /* ─── INTRO ─── */
     .intro {
-      padding: clamp(3.5rem, 7vw, 6rem) clamp(2rem, 10vw, 13rem);
-      max-width: 1000px;
-      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--rule);
     }
-    .intro p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.4rem, 2.6vw, 2rem);
-      line-height: 1.62;
-      font-weight: 300;
-      color: var(--earth);
-    }
-    .intro p + p { margin-top: 1.4rem; }
 
-    /* STATS */
+    .intro-left {
+      padding: 5rem 4rem 5rem 2.5rem;
+      border-right: 1px solid var(--rule);
+    }
+
+    .intro-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 2rem;
+    }
+
+    .intro-left h2 {
+      font-family: 'EB Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+      line-height: 1.2;
+      color: var(--black);
+    }
+    .intro-left h2 em { font-style: italic; color: var(--mid); }
+
+    .intro-right {
+      padding: 5rem 2.5rem 5rem 4rem;
+    }
+
+    .intro-right p {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: var(--mid);
+      margin-bottom: 1.1rem;
+    }
+
+    /* ─── STATS ─── */
     .stats {
-      background: var(--earth);
-      color: var(--sand);
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      background: var(--bg);
     }
     .stat {
-      flex: 1 1 140px;
-      padding: 2.25rem 1.5rem;
+      flex: 1 1 0;
+      padding: 2rem 1.5rem;
       text-align: center;
-      border-right: 1px solid rgba(242,237,228,0.1);
+      border-right: 1px solid var(--rule);
     }
     .stat:last-child { border-right: none; }
     .stat-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 300;
-      line-height: 1;
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 400;
       display: block;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
+      color: var(--black);
     }
     .stat-label {
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--stone);
+      color: var(--mid);
     }
 
-    /* GALLERY */
+    /* ─── GALLERY ─── */
     .gallery-wrap {
-      background: var(--sand);
-      padding: 2px;
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 2px;
+      background: var(--white);
+      padding: 2px;
     }
 
     .g1 { grid-column: 1 / 8; grid-row: 1 / 3; }
@@ -192,41 +280,356 @@
       overflow: hidden;
       position: relative;
       cursor: zoom-in;
-      background: var(--linen);
+      background: var(--bg);
     }
     .gallery-cell img {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
       display: block;
       min-height: 180px;
-      transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
-      filter: brightness(0.96);
+      filter: grayscale(100%);
+      transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94),
+                  filter 0.5s ease;
     }
-    .gallery-cell:hover img { transform: scale(1.05); filter: brightness(1.03); }
-    .gallery-cell::after {
-      content: '↗';
-      position: absolute;
-      bottom: 0.6rem; right: 0.6rem;
-      width: 1.8rem; height: 1.8rem;
-      background: rgba(26,15,10,0.52);
-      color: var(--sand);
-      font-size: 0.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.25s;
+    .gallery-cell:hover img {
+      transform: scale(1.04);
+      filter: grayscale(60%);
     }
-    .gallery-cell:hover::after { opacity: 1; }
 
-    /* LIGHTBOX */
+    /* ─── DETAILS ─── */
+    .details {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      border-top: 1px solid var(--rule);
+    }
+
+    .details-text {
+      padding: 5rem 4rem 5rem 2.5rem;
+      border-right: 1px solid var(--rule);
+    }
+    .details-text h2 {
+      font-family: 'EB Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(1.7rem, 2.8vw, 2.4rem);
+      line-height: 1.2;
+      color: var(--black);
+      margin-bottom: 2rem;
+    }
+    .details-text p {
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--mid);
+      margin-bottom: 1rem;
+    }
+
+    .details-list {
+      padding: 5rem 2.5rem 5rem 3.5rem;
+      background: var(--bg);
+    }
+    .details-list h3 {
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 2rem;
+    }
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--rule);
+      gap: 1rem;
+    }
+    .spec-row:first-of-type { border-top: 1px solid var(--rule); }
+    .spec-key {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      flex-shrink: 0;
+    }
+    .spec-val {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.05rem;
+      text-align: right;
+      color: var(--black);
+    }
+
+    /* ─── SECTION HEADER ─── */
+    .section-header {
+      padding: 4rem 2.5rem 3rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .section-header-left {}
+    .section-kicker {
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1rem;
+    }
+    .section-header h2 {
+      font-family: 'EB Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      color: var(--black);
+      max-width: 640px;
+    }
+    .section-header h2 em { font-style: italic; color: var(--mid); }
+
+    /* ─── RENTAL NUMBERS ─── */
+    .rental-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--rule);
+    }
+    .rental-card {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid var(--rule);
+    }
+    .rental-card:last-child { border-right: none; }
+    .rental-card-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    .rental-card-num {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400;
+      line-height: 1;
+      color: var(--black);
+      margin-bottom: 0.6rem;
+    }
+    .rental-card-note {
+      font-size: 0.7rem;
+      color: var(--mid);
+      line-height: 1.55;
+    }
+
+    .rental-body {
+      padding: 3rem 2.5rem 4rem;
+      border-top: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    .rental-body p {
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--mid);
+    }
+    .rental-body p + p { margin-top: 1rem; }
+    .rental-body strong {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--black);
+    }
+    .rental-disclaimer {
+      font-size: 0.65rem;
+      color: #ABABAB;
+      line-height: 1.6;
+      margin-top: 1.5rem;
+      font-style: italic;
+    }
+
+    /* ─── OPPORTUNITY ─── */
+    .opp-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--rule);
+    }
+    .opp-card {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid var(--rule);
+    }
+    .opp-card:last-child { border-right: none; }
+    .opp-num {
+      font-family: 'EB Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 400;
+      color: var(--rule);
+      line-height: 1;
+      margin-bottom: 1.25rem;
+    }
+    .opp-card h4 {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--black);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.01em;
+    }
+    .opp-card p {
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: var(--mid);
+    }
+
+    /* ─── LOCATION ─── */
+    .location {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--rule);
+    }
+    .location-left {
+      padding: 5rem 4rem 5rem 2.5rem;
+      border-right: 1px solid var(--rule);
+      background: var(--off-black);
+      color: var(--white);
+    }
+    .location-left .section-kicker { color: rgba(255,255,255,0.35); }
+    .location-left h2 {
+      font-family: 'EB Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      line-height: 1.2;
+      margin-bottom: 2rem;
+    }
+    .location-left p {
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.45);
+    }
+    .location-left p + p { margin-top: 1rem; }
+
+    .location-right {
+      padding: 5rem 2.5rem 5rem 4rem;
+      background: var(--bg);
+    }
+    .loc-point {
+      display: flex;
+      gap: 1.25rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: baseline;
+    }
+    .loc-point:first-of-type { border-top: 1px solid var(--rule); }
+    .loc-num {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.85rem;
+      color: var(--mid);
+      min-width: 1.25rem;
+    }
+    .loc-text {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--black);
+    }
+    .loc-dist {
+      margin-left: auto;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+      white-space: nowrap;
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      border-top: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .cta-left {
+      padding: 6rem 4rem 6rem 2.5rem;
+      border-right: 1px solid var(--rule);
+    }
+    .cta-pretitle {
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+    }
+    .price-range {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 400;
+      line-height: 1;
+      color: var(--black);
+      margin-bottom: 0.5rem;
+    }
+    .price-note {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 3rem;
+    }
+    .urgency-line {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2vw, 1.45rem);
+      color: var(--black);
+      display: block;
+      margin-bottom: 3rem;
+      line-height: 1.4;
+      max-width: 360px;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 1rem 2.75rem;
+      background: var(--black);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      transition: background 0.25s;
+    }
+    .cta-btn:hover { background: var(--off-black); }
+
+    .cta-right {
+      padding: 6rem 2.5rem 6rem 4rem;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .cta-right p {
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--mid);
+      margin-bottom: 1rem;
+    }
+    .cta-right .fine {
+      font-size: 0.7rem;
+      color: #ABABAB;
+      margin-top: 2rem;
+      font-style: italic;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 1.75rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* ─── LIGHTBOX ─── */
     .lightbox {
       display: none;
       position: fixed;
       inset: 0;
       z-index: 1000;
-      background: rgba(16,8,4,0.97);
+      background: rgba(13,13,13,0.97);
       align-items: center;
       justify-content: center;
     }
@@ -236,397 +639,104 @@
       max-height: 90vh;
       object-fit: contain;
       display: block;
+      filter: grayscale(100%);
       user-select: none;
     }
     .lb-btn {
       position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(242,237,228,0.06);
-      border: 1px solid rgba(242,237,228,0.12);
-      color: var(--sand);
-      width: 2.8rem; height: 2.8rem;
+      top: 50%; transform: translateY(-50%);
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.5);
+      width: 2.5rem; height: 2.5rem;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 0.9rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s;
+      transition: all 0.2s;
     }
-    .lb-btn:hover { background: rgba(242,237,228,0.14); }
-    .lb-prev { left: 1rem; }
-    .lb-next { right: 1rem; }
+    .lb-btn:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+    .lb-prev { left: 1.5rem; }
+    .lb-next { right: 1.5rem; }
     .lb-close {
       position: fixed;
-      top: 1rem; right: 1rem;
+      top: 1.5rem; right: 1.5rem;
       background: transparent;
       border: none;
-      color: rgba(242,237,228,0.45);
-      font-size: 1.4rem;
+      color: rgba(255,255,255,0.35);
+      font-size: 1.2rem;
       cursor: pointer;
       padding: 0.5rem;
       transition: color 0.2s;
     }
-    .lb-close:hover { color: var(--sand); }
+    .lb-close:hover { color: var(--white); }
     .lb-counter {
       position: fixed;
-      bottom: 1.25rem;
-      left: 50%;
+      bottom: 1.5rem; left: 50%;
       transform: translateX(-50%);
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      color: rgba(201,190,178,0.4);
-      text-transform: uppercase;
-    }
-
-    /* PROPERTY DETAILS */
-    .details {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-    }
-    .details-text {
-      padding: clamp(3rem, 6vw, 5.5rem) clamp(2rem, 5vw, 5rem);
-      background: var(--white);
-    }
-    .details-text h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(1.7rem, 3vw, 2.6rem);
-      line-height: 1.15;
-      color: var(--earth);
-      margin-bottom: 1.75rem;
-    }
-    .details-text p {
-      font-size: 0.88rem;
-      line-height: 1.9;
-      color: #4a3328;
-      margin-bottom: 1.1rem;
-    }
-    .details-list {
-      padding: clamp(3rem, 6vw, 5.5rem) clamp(2rem, 5vw, 4rem);
-      background: var(--linen);
-    }
-    .details-list h3 {
-      font-size: 0.62rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--clay);
-      margin-bottom: 2rem;
-    }
-    .spec-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 0.9rem 0;
-      border-bottom: 1px solid var(--stone);
-      gap: 1rem;
-    }
-    .spec-row:first-of-type { border-top: 1px solid var(--stone); }
-    .spec-key {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--clay);
-      flex-shrink: 0;
-    }
-    .spec-val {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      text-align: right;
-    }
-
-    /* SECTION LABEL */
-    .section-label {
-      font-size: 0.62rem;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--clay);
-      margin-bottom: 2.25rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: rgba(160,123,103,0.3);
-      max-width: 55px;
-    }
-
-    /* RENTAL INCOME */
-    .rental {
-      background: var(--ink);
-      color: var(--sand);
-      padding: clamp(4rem, 8vw, 7rem) clamp(2rem, 8vw, 10rem);
-    }
-    .rental .section-label { color: var(--clay); }
-    .rental .section-label::after { background: rgba(201,190,178,0.15); }
-
-    .rental h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(1.9rem, 4vw, 3.2rem);
-      line-height: 1.15;
-      margin-bottom: 1rem;
-      max-width: 700px;
-    }
-    .rental-lead {
-      font-size: 0.88rem;
-      line-height: 1.88;
-      color: var(--stone);
-      max-width: 700px;
-      margin-bottom: 3.5rem;
-    }
-
-    .rental-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: rgba(201,190,178,0.08);
-      margin-bottom: 2rem;
-    }
-    .rental-card {
-      background: rgba(30,20,16,0.7);
-      padding: 2rem 1.75rem;
-    }
-    .rental-card-label {
       font-size: 0.6rem;
       letter-spacing: 0.22em;
+      color: rgba(255,255,255,0.28);
       text-transform: uppercase;
-      color: var(--clay);
-      margin-bottom: 0.75rem;
-      line-height: 1.5;
-    }
-    .rental-card-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      font-weight: 300;
-      line-height: 1;
-      color: var(--sand);
-      margin-bottom: 0.5rem;
-    }
-    .rental-card-note {
-      font-size: 0.7rem;
-      color: rgba(201,190,178,0.42);
-      line-height: 1.55;
     }
 
-    .rental-disclaimer {
-      font-size: 0.68rem;
-      color: rgba(201,190,178,0.28);
-      font-style: italic;
-      line-height: 1.6;
-      margin-bottom: 3.5rem;
-    }
-
-    .rental-boom {
-      border-top: 1px solid rgba(201,190,178,0.1);
-      padding-top: 3rem;
-    }
-    .rental-boom p {
-      font-size: 0.88rem;
-      line-height: 1.9;
-      color: var(--stone);
-      max-width: 700px;
-    }
-    .rental-boom p + p { margin-top: 1.1rem; }
-    .boom-stat {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.12rem;
-      color: var(--sand);
-      font-style: italic;
-    }
-
-    /* OPPORTUNITY */
-    .opportunity {
-      padding: clamp(4rem, 8vw, 7rem) clamp(2rem, 8vw, 10rem);
-      background: var(--sand);
-    }
-    .opportunity h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(1.9rem, 4vw, 3rem);
-      line-height: 1.15;
-      color: var(--earth);
-      margin-bottom: 3rem;
-      max-width: 620px;
-    }
-    .opp-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5px;
-      background: var(--stone);
-    }
-    .opp-card {
-      background: var(--white);
-      padding: 2.25rem 2rem;
-    }
-    .opp-icon { font-size: 1.4rem; display: block; margin-bottom: 1rem; }
-    .opp-card h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: var(--earth);
-      margin-bottom: 0.6rem;
-      line-height: 1.25;
-    }
-    .opp-card p { font-size: 0.82rem; line-height: 1.8; color: #5a4035; }
-
-    /* LOCATION */
-    .location {
-      background: var(--earth);
-      color: var(--sand);
-      padding: clamp(4rem, 8vw, 7rem) clamp(2rem, 8vw, 10rem);
-    }
-    .location .section-label { color: var(--stone); }
-    .location .section-label::after { background: rgba(201,190,178,0.18); }
-    .location h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(1.9rem, 4vw, 3.2rem);
-      line-height: 1.15;
-      margin-bottom: 3rem;
-    }
-    .location-cols {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-    }
-    .location-cols p {
-      font-size: 0.87rem;
-      line-height: 1.9;
-      color: rgba(201,190,178,0.72);
-    }
-    .location-cols p + p { margin-top: 1.25rem; }
-    .loc-point { display: flex; gap: 1rem; margin-bottom: 1.1rem; align-items: flex-start; }
-    .loc-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--clay); margin-top: 0.5rem; flex-shrink: 0; }
-    .loc-text { font-size: 0.82rem; line-height: 1.7; color: rgba(201,190,178,0.6); }
-
-    /* CTA */
-    .cta-section {
-      padding: clamp(5rem, 9vw, 8rem) clamp(2rem, 8vw, 10rem);
-      text-align: center;
-      background: var(--linen);
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-section::before {
-      content: 'TODOS SANTOS';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(4rem, 14vw, 16rem);
-      font-weight: 600;
-      color: rgba(92,64,51,0.04);
-      white-space: nowrap;
-      pointer-events: none;
-      letter-spacing: 0.06em;
-      user-select: none;
-    }
-    .cta-inner { position: relative; z-index: 1; }
-    .cta-pretitle {
-      font-size: 0.62rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--clay);
-      margin-bottom: 1.25rem;
-    }
-    .price-range {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.5rem, 9vw, 7rem);
-      font-weight: 300;
-      line-height: 1;
-      color: var(--earth);
-      margin-bottom: 0.5rem;
-    }
-    .price-note {
-      font-size: 0.68rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--stone);
-      margin-bottom: 2.5rem;
-    }
-    .urgency-line {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(1.1rem, 2.2vw, 1.5rem);
-      color: var(--clay);
-      margin-bottom: 2rem;
-      display: block;
-    }
-    .cta-inner > p {
-      font-size: 0.88rem;
-      line-height: 1.85;
-      color: var(--earth);
-      max-width: 480px;
-      margin: 0 auto 2.5rem;
-      opacity: 0.75;
-    }
-    .cta-btn {
-      display: inline-block;
-      padding: 1.1rem 3.5rem;
-      background: var(--earth);
-      color: var(--sand);
-      text-decoration: none;
-      font-size: 0.68rem;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      transition: background 0.3s, color 0.3s;
-    }
-    .cta-btn:hover { background: var(--ink); color: var(--white); }
-
-    /* FOOTER */
-    footer {
-      background: var(--ink);
-      color: rgba(201,190,178,0.3);
-      padding: 1.75rem clamp(2rem, 8vw, 10rem);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.62rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    /* ANIMATIONS */
+    /* ─── ANIMATIONS ─── */
     @keyframes fadeUp {
       to { opacity: 1; transform: translateY(0); }
     }
     .reveal {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(16px);
       transition: opacity 0.85s ease, transform 0.85s ease;
     }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .details { grid-template-columns: 1fr; }
-      .location-cols { grid-template-columns: 1fr; gap: 2.5rem; }
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1000px) {
       .rental-grid { grid-template-columns: 1fr 1fr; }
+      .opp-grid { grid-template-columns: 1fr 1fr; }
+      .opp-card:nth-child(2) { border-right: none; }
+      .opp-card:nth-child(3) { border-top: 1px solid var(--rule); }
+      .opp-card:nth-child(4) { border-top: 1px solid var(--rule); border-right: none; }
     }
-    @media (max-width: 768px) {
+    @media (max-width: 800px) {
+      .intro { grid-template-columns: 1fr; }
+      .intro-left { border-right: none; border-bottom: 1px solid var(--rule); padding: 3rem 2rem; }
+      .intro-right { padding: 3rem 2rem; }
+      .details { grid-template-columns: 1fr; }
+      .details-text { border-right: none; border-bottom: 1px solid var(--rule); padding: 3rem 2rem; }
+      .details-list { padding: 3rem 2rem; }
+      .location { grid-template-columns: 1fr; }
+      .location-left { padding: 3rem 2rem; border-right: none; }
+      .location-right { padding: 3rem 2rem; }
+      .cta-section { grid-template-columns: 1fr; }
+      .cta-left { border-right: none; border-bottom: 1px solid var(--rule); padding: 3rem 2rem; }
+      .cta-right { padding: 3rem 2rem; }
+      .rental-body { grid-template-columns: 1fr; gap: 0; }
+      .hero-content { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .hero-tagline { text-align: left; }
       .g1 { grid-column: 1 / -1; }
       .g2 { grid-column: 1 / 7; }
       .g3 { grid-column: 7 / 13; }
       .g4 { grid-column: 1 / -1; }
       .g5 { grid-column: 1 / -1; }
       .g-thumb { grid-column: span 6; }
-    }
-    @media (max-width: 480px) {
-      .rental-grid { grid-template-columns: 1fr; }
+      .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 3rem 2rem 2rem; }
     }
   </style>
 </head>
 <body>
 
+  <!-- NAV -->
+  <nav id="nav">
+    <a class="nav-logo" href="#">Casa Julie</a>
+    <a class="nav-cta" href="mailto:amy@amyrextodossantos.com?subject=Casa%20Julie%20%E2%80%94%20Inquiry">Get in Touch</a>
+  </nav>
+
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg">
+    <div>
       <img class="hero-img active" src="photos/06.jpg" alt="Casa Julie">
       <img class="hero-img" src="photos/01.jpg" alt="Casa Julie">
       <img class="hero-img" src="photos/02.jpg" alt="Casa Julie">
@@ -635,21 +745,31 @@
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <p class="hero-eyebrow">Todos Santos &nbsp;·&nbsp; Baja California Sur</p>
-      <h1 class="hero-title">Casa<br><em>Julie</em></h1>
-      <p class="hero-tagline">A rare residence at the edge of everything Todos Santos offers</p>
+      <div class="hero-left">
+        <p class="hero-eyebrow">Todos Santos &nbsp;·&nbsp; Baja California Sur</p>
+        <h1 class="hero-title">Casa<br><em>Julie</em></h1>
+      </div>
+      <div class="hero-right">
+        <p class="hero-tagline">A rare residence at the edge of everything Todos Santos offers</p>
+      </div>
     </div>
     <div class="hero-scroll">
       <div class="scroll-line"></div>
-      Explore
+      <span class="scroll-label">Scroll</span>
     </div>
   </section>
 
   <!-- INTRO -->
-  <section class="intro">
-    <p>A generously scaled residence set close by Punta Lobos, on the town's first elevated hillside — one of the most coveted positions in the Todos Santos corridor. Two independent structures, a 770 m² lot, and a location that places everything within reach.</p>
-    <p>The main house offers three bedrooms and three full bathrooms across a thoughtful floor plan. A fully detached casita with its own bedroom and bath completes the picture — two units, one property, and a canvas ready for its next chapter.</p>
-  </section>
+  <div class="intro">
+    <div class="intro-left">
+      <p class="intro-label">The Property</p>
+      <h2>A generously scaled residence on the first hillside <em>above Punta Lobos</em></h2>
+    </div>
+    <div class="intro-right">
+      <p>Set within Fraccionamiento Punta Lobos, on the town's first elevated hillside — one of the most coveted positions in the Todos Santos corridor. Two independent structures, a 770 m² lot, and a location that places everything within reach.</p>
+      <p>The main house offers three bedrooms and three full bathrooms. A fully detached casita with its own bedroom and bath completes the picture — two units, one property, and a canvas ready for its next chapter.</p>
+    </div>
+  </div>
 
   <!-- STATS -->
   <div class="stats">
@@ -657,7 +777,7 @@
     <div class="stat"><span class="stat-num">3 + 1</span><span class="stat-label">Bedrooms</span></div>
     <div class="stat"><span class="stat-num">3 + 1</span><span class="stat-label">Bathrooms</span></div>
     <div class="stat"><span class="stat-num">2</span><span class="stat-label">Structures</span></div>
-    <div class="stat"><span class="stat-num">~5 min</span><span class="stat-label">To town center</span></div>
+    <div class="stat"><span class="stat-num">5 min</span><span class="stat-label">To town center</span></div>
   </div>
 
   <!-- GALLERY -->
@@ -695,12 +815,12 @@
     <div class="lb-counter" id="lb-counter"></div>
   </div>
 
-  <!-- PROPERTY DETAILS -->
+  <!-- DETAILS -->
   <div class="details">
     <div class="details-text">
       <h2>A residence that rewards the right vision</h2>
       <p>Built on a 770 m² lot within Fraccionamiento Punta Lobos, the property sits on the first elevated hillside above Todos Santos — with clear sightlines toward the Pacific and immediate proximity to the town's cultural center.</p>
-      <p>The main house features three bedrooms and three full bathrooms. The primary suite is accessed independently, providing complete privacy from the main living areas. A fully detached casita with its own bedroom and bathroom makes the property ideal for dual-use: owner residence plus rental income, or private guest accommodation.</p>
+      <p>The main house features three bedrooms and three full bathrooms. The primary suite is accessed independently, providing complete privacy from the main living areas. A fully detached casita makes the property ideal for dual-use: owner residence plus rental income, or private guest accommodation.</p>
       <p>The lot has ample space and the right orientation for a pool. That single addition — paired with landscaping — is the most direct path to unlocking the property's full market and rental potential.</p>
     </div>
     <div class="details-list">
@@ -716,103 +836,137 @@
     </div>
   </div>
 
-  <!-- RENTAL INCOME -->
-  <section class="rental reveal">
-    <div class="section-label">The Numbers</div>
-    <h2>Todos Santos is one of Baja's fastest-growing short-term rental markets</h2>
-    <p class="rental-lead">Properties in the Punta Lobos corridor are generating consistent Airbnb income year-round. A growing international visitor base, limited quality inventory, and rising nightly rates make this one of the most compelling rental markets in all of Baja California Sur.</p>
-
-    <div class="rental-grid">
-      <div class="rental-card">
-        <div class="rental-card-label">Est. nightly rate — main house</div>
-        <div class="rental-card-num">$350–$500</div>
-        <div class="rental-card-note">USD / night on Airbnb &amp; Vrbo<br>without pool</div>
-      </div>
-      <div class="rental-card">
-        <div class="rental-card-label">Pool rate premium</div>
-        <div class="rental-card-num">+30–50%</div>
-        <div class="rental-card-note">Typical uplift for properties<br>with private pool in this market</div>
-      </div>
-      <div class="rental-card">
-        <div class="rental-card-label">Est. annual gross — main house</div>
-        <div class="rental-card-num">$60–$90K</div>
-        <div class="rental-card-note">USD / year at 55–65% occupancy<br>conservatively modeled</div>
-      </div>
-      <div class="rental-card">
-        <div class="rental-card-label">Casita — additional income</div>
-        <div class="rental-card-num">$150–$200</div>
-        <div class="rental-card-note">USD / night independently listed<br>or offered as add-on</div>
-      </div>
+  <!-- RENTAL NUMBERS -->
+  <div class="section-header reveal">
+    <div class="section-header-left">
+      <p class="section-kicker">The Numbers</p>
+      <h2>Todos Santos is one of Baja's <em>fastest-growing</em> short-term rental markets</h2>
     </div>
+  </div>
 
-    <p class="rental-disclaimer">Projections are illustrative estimates based on comparable active listings in the Todos Santos / Punta Lobos area. Actual results depend on management, seasonality, and property condition.</p>
+  <div class="rental-grid reveal">
+    <div class="rental-card">
+      <div class="rental-card-label">Est. nightly rate<br>Main house</div>
+      <div class="rental-card-num">$350–$500</div>
+      <div class="rental-card-note">USD / night · without pool</div>
+    </div>
+    <div class="rental-card">
+      <div class="rental-card-label">Pool rate premium<br>vs. comparable listing</div>
+      <div class="rental-card-num">+30–50%</div>
+      <div class="rental-card-note">Typical uplift in this market</div>
+    </div>
+    <div class="rental-card">
+      <div class="rental-card-label">Est. annual gross<br>Main house</div>
+      <div class="rental-card-num">$60–$90K</div>
+      <div class="rental-card-note">USD / year · 55–65% occupancy</div>
+    </div>
+    <div class="rental-card">
+      <div class="rental-card-label">Casita<br>Additional income</div>
+      <div class="rental-card-num">$150–$200</div>
+      <div class="rental-card-note">USD / night · independently listed</div>
+    </div>
+  </div>
 
-    <div class="rental-boom">
+  <div class="rental-body reveal">
+    <div>
       <p>Todos Santos has undergone a quiet but decisive transformation over the past decade. Once a well-kept secret for surfers and artists, it has attracted a growing wave of design-forward hotels, acclaimed restaurants, and international real estate investment — without losing the character that made it special.</p>
-      <p>Properties adjacent to Casa Julie are already active on Airbnb and generating income. <span class="boom-stat">The infrastructure is in place, the demand is real, and the supply of quality homes in this precise location is finite.</span> New development here is constrained by topography and available lots — this hillside will not be replicated.</p>
-      <p>The window for acquiring at current values is narrowing. Comparable properties that came to market two years ago at similar prices have since appreciated materially. The buyers who moved early are the ones who captured the full upside.</p>
+      <p>Properties adjacent to Casa Julie are already active on Airbnb and generating income. <strong>The infrastructure is in place, the demand is real, and the supply of quality homes in this precise location is finite.</strong></p>
+      <p class="rental-disclaimer">Projections are illustrative estimates based on comparable active listings in the Todos Santos / Punta Lobos area. Actual results depend on management, seasonality, and property condition.</p>
     </div>
-  </section>
+    <div>
+      <p>New development here is constrained by topography and available lots — this hillside will not be replicated. The window for acquiring at current values is narrowing.</p>
+      <p>Comparable properties that came to market two years ago at similar prices have since appreciated materially. The buyers who moved early are the ones who captured the full upside.</p>
+    </div>
+  </div>
 
   <!-- OPPORTUNITY -->
-  <section class="opportunity reveal">
-    <div class="section-label">Why Now</div>
-    <h2>Four reasons this opportunity makes sense</h2>
-    <div class="opp-grid">
-      <div class="opp-card">
-        <span class="opp-icon">🏊</span>
-        <h4>Pool — the single highest-return improvement</h4>
-        <p>The lot is sized for it. In this rental market a pool moves the property from well-performing to exceptional, unlocking a 30–50% rate premium and a materially wider booking window through the shoulder seasons.</p>
-      </div>
-      <div class="opp-card">
-        <span class="opp-icon">🏡</span>
-        <h4>Two income streams, one purchase</h4>
-        <p>The independent casita can be listed separately on Airbnb, offered to guests as an add-on, or reserved for family. No structural work required — just set it up and activate it.</p>
-      </div>
-      <div class="opp-card">
-        <span class="opp-icon">📍</span>
-        <h4>A location that cannot be recreated</h4>
-        <p>First hillside above Punta Lobos. Walking distance to Il Giardino. This specific combination of elevation, proximity, and neighborhood character is not available elsewhere in Todos Santos.</p>
-      </div>
-      <div class="opp-card">
-        <span class="opp-icon">⏳</span>
-        <h4>Priced to move — not to linger</h4>
-        <p>The seller is motivated and the price reflects that. This is not a listing fishing for the highest bidder over months. It is a well-priced property being shared with a short list of people — the kind of opportunity that closes quietly.</p>
-      </div>
+  <div class="section-header reveal">
+    <div class="section-header-left">
+      <p class="section-kicker">Why Now</p>
+      <h2>Four reasons this opportunity makes sense</h2>
     </div>
-  </section>
+  </div>
+
+  <div class="opp-grid reveal">
+    <div class="opp-card">
+      <div class="opp-num">01</div>
+      <h4>Pool — the highest-return single improvement</h4>
+      <p>The lot is sized for it. In this rental market a pool moves the property from well-performing to exceptional, unlocking a 30–50% rate premium and a materially wider booking window through the shoulder seasons.</p>
+    </div>
+    <div class="opp-card">
+      <div class="opp-num">02</div>
+      <h4>Two income streams, one purchase</h4>
+      <p>The independent casita can be listed separately on Airbnb, offered to guests as an add-on, or reserved for family. No structural work required — just set it up and activate it.</p>
+    </div>
+    <div class="opp-card">
+      <div class="opp-num">03</div>
+      <h4>A location that cannot be recreated</h4>
+      <p>First hillside above Punta Lobos. Walking distance to Il Giardino. This specific combination of elevation, proximity, and neighborhood character is not available elsewhere in Todos Santos.</p>
+    </div>
+    <div class="opp-card">
+      <div class="opp-num">04</div>
+      <h4>Priced to move — not to linger</h4>
+      <p>The seller is motivated and the price reflects that. This is a well-priced property being shared with a short list of people — the kind of opportunity that closes quietly, before the market gets involved.</p>
+    </div>
+  </div>
 
   <!-- LOCATION -->
-  <section class="location reveal">
-    <div class="section-label">Location</div>
-    <h2>Where the town ends and the landscape begins</h2>
-    <div class="location-cols">
-      <div>
-        <p>Todos Santos has drawn a discerning international community for decades — artists, architects, surfers, and investors who recognized the town's character before the broader market caught on. The magic is intact.</p>
-        <p>The property is set close by Punta Lobos, on the town's first elevated hillside. Punta Lobos Beach, the old port, and Hotel San Cristóbal are minutes away. The village center — galleries, restaurants, Hotel California — is a short drive.</p>
+  <div class="location">
+    <div class="location-left">
+      <p class="section-kicker">Location</p>
+      <h2>Where the town ends and the landscape begins</h2>
+      <p>Todos Santos has drawn a discerning international community for decades — artists, architects, surfers, and investors who recognized the town's character before the broader market caught on.</p>
+      <p>The property is set close by Punta Lobos, on the town's first elevated hillside. Punta Lobos Beach, the old port, and Hotel San Cristóbal are minutes away. The village center is a short drive.</p>
+    </div>
+    <div class="location-right">
+      <div class="loc-point">
+        <span class="loc-num">—</span>
+        <span class="loc-text">Il Giardino restaurant</span>
+        <span class="loc-dist">Walking distance</span>
       </div>
-      <div>
-        <div class="loc-point"><div class="loc-dot"></div><span class="loc-text">Il Giardino restaurant — walking distance</span></div>
-        <div class="loc-point"><div class="loc-dot"></div><span class="loc-text">Todos Santos town center — ~5 min drive</span></div>
-        <div class="loc-point"><div class="loc-dot"></div><span class="loc-text">Punta Lobos Beach, old port &amp; Hotel San Cristóbal — 5 min</span></div>
-        <div class="loc-point"><div class="loc-dot"></div><span class="loc-text">Los Cerritos / Pescadero — 20 min south</span></div>
-        <div class="loc-point"><div class="loc-dot"></div><span class="loc-text">Los Cabos International Airport — ~75 min</span></div>
-        <div class="loc-point"><div class="loc-dot"></div><span class="loc-text">La Paz — ~75 min north</span></div>
+      <div class="loc-point">
+        <span class="loc-num">—</span>
+        <span class="loc-text">Todos Santos town center</span>
+        <span class="loc-dist">~5 min</span>
+      </div>
+      <div class="loc-point">
+        <span class="loc-num">—</span>
+        <span class="loc-text">Punta Lobos Beach &amp; Hotel San Cristóbal</span>
+        <span class="loc-dist">5 min</span>
+      </div>
+      <div class="loc-point">
+        <span class="loc-num">—</span>
+        <span class="loc-text">Los Cerritos / Pescadero</span>
+        <span class="loc-dist">20 min</span>
+      </div>
+      <div class="loc-point">
+        <span class="loc-num">—</span>
+        <span class="loc-text">Los Cabos International Airport</span>
+        <span class="loc-dist">~75 min</span>
+      </div>
+      <div class="loc-point">
+        <span class="loc-num">—</span>
+        <span class="loc-text">La Paz</span>
+        <span class="loc-dist">~75 min</span>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- CTA -->
-  <section class="cta-section">
-    <div class="cta-inner">
+  <div class="cta-section">
+    <div class="cta-left">
       <p class="cta-pretitle">Before it hits the market</p>
-      <div class="price-range">$550 – $650K</div>
+      <div class="price-range">$550–$650K</div>
       <p class="price-note">USD &nbsp;·&nbsp; Todos Santos, B.C.S.</p>
       <em class="urgency-line">A motivated seller, a short list, and a property priced to close.</em>
-      <p>This is not a listing — it is a conversation. If it speaks to you, reach out directly. Showings are available and additional information is on hand.</p>
       <a class="cta-btn" href="mailto:amy@amyrextodossantos.com?subject=Casa%20Julie%20%E2%80%94%20I%27d%20like%20to%20know%20more">Get in Touch</a>
     </div>
-  </section>
+    <div class="cta-right">
+      <p>This is not a listing — it is a conversation. If it speaks to you, reach out directly. Showings are available and additional information is on hand.</p>
+      <p>The seller is motivated and has priced the property to move quickly, not to sit on the market for months while the right buyer eventually appears. This window is short by design.</p>
+      <p class="fine">Additional documentation, floor plans, and property details available upon request.</p>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -823,6 +977,12 @@
   <script>
     const TOTAL  = 22;
     const photos = Array.from({length: TOTAL}, (_, i) => `photos/${String(i+1).padStart(2,'0')}.jpg`);
+
+    // Nav scroll state
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 80);
+    }, { passive: true });
 
     // Hero slideshow — starts on 06
     const heroImgs = document.querySelectorAll('.hero-img');
@@ -836,7 +996,7 @@
     }
 
     // Lightbox
-    const lb = document.getElementById('lightbox');
+    const lb    = document.getElementById('lightbox');
     const lbImg = document.getElementById('lb-img');
     const lbCtr = document.getElementById('lb-counter');
     let lbIndex = 0;
@@ -859,8 +1019,8 @@
       c.addEventListener('click', () => openLb(+c.dataset.index))
     );
     document.getElementById('lb-close').addEventListener('click', closeLb);
-    document.getElementById('lb-prev').addEventListener('click', () => stepLb(-1));
-    document.getElementById('lb-next').addEventListener('click', () => stepLb(1));
+    document.getElementById('lb-prev').addEventListener('click',  () => stepLb(-1));
+    document.getElementById('lb-next').addEventListener('click',  () => stepLb(1));
     lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
     document.addEventListener('keydown', e => {
       if (!lb.classList.contains('open')) return;
@@ -874,7 +1034,7 @@
       entries => entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
       }),
-      { threshold: 0.06, rootMargin: '0px 0px -30px 0px' }
+      { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
     );
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
