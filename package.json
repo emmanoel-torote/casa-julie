@@ -1,0 +1,9 @@
+{
+  "name": "casa-julie",
+  "version": "1.0.0",
+  "description": "Casa Julie - Todos Santos, Baja California Sur",
+  "private": true,
+  "dependencies": {
+    "@vercel/analytics": "^1.4.1"
+  }
+}
